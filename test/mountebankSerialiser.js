@@ -7,6 +7,8 @@ const filePath = `./pacts/${pacticipant}-${
   process.env.PACT_PROVIDER || provider
 }.json`;
 
+const pjson = require("../package.json")
+
 const defaultPact = {
   consumer: { name: pacticipant },
   provider: { name: process.env.PACT_PROVIDER || provider },
@@ -14,6 +16,10 @@ const defaultPact = {
   metadata: {
     pactSpecification: {
       version: "2.0.0",
+    },
+    client: {
+      name: "pact-mountebank-adapter",
+      version: pjson.version,
     },
   },
 };
@@ -29,7 +35,7 @@ export const mbMatchesToPact = (imposters) => {
         method: match.request.method,
         path: match.request.path,
         body: match.request.body ? JSON.parse(match.request.body) : undefined,
-        query: match.request.query,
+        query: match.request.query ? new URLSearchParams(match.request.query).toString() : undefined,
         headers: match.request.headers,
       },
       response: {
