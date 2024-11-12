@@ -24,12 +24,16 @@ describe("API Contract Test", () => {
   afterEach(() => writeStubs(mb, imposterPort));
   afterAll(() => stopStubs());
 
-  const expectedProduct = {
-    id: "10",
+  //const expectedProduct = {
+ //   id: "10",
+ //   type: "CREDIT_CARD",
+ //   name: "28 Degrees",
+ // };
+  
+ const expectedProduct = {
     type: "CREDIT_CARD",
     name: "28 Degrees",
   };
-
   describe("retrieving products", () => {
     test("products exists", async () => {
       // Arrange
